@@ -12,6 +12,7 @@ import com.simpl.model.exception.CustomException;
 import com.simpl.model.exception.UserNotFoundException;
 import com.simpl.model.transaction.Transaction;
 import com.simpl.model.transaction.TransactionStatus;
+import com.simpl.validate.Validator;
 
 public class BookKeeper {
 	private Hashtable<String,User> users;
@@ -75,7 +76,8 @@ public class BookKeeper {
 	
 	
 	public Merchant setDiscount(String mname , double discount) throws UserNotFoundException, CustomException {
-		if(discount > 100 || discount < 0) {
+		
+		if(!Validator.isDiscountValid(discount)) {
 			throw new CustomException("discount is not valid.");
 		}
 		if(merchants.containsKey(mname)) {
